@@ -1,3 +1,4 @@
-export default function Home() {
-  return <h1>Bienvenue sur mon CRM 🛠️</h1>;
-}
+const supabase = createClient(
+  'https://xcrnrbuvojrsqclnavuf.supabase.co',
+  'Ici_tu_copies_ta_clef_anon_publique'
+);
