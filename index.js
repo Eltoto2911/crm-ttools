@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
+// Remplace les valeurs par les tiennes (Supabase URL et Anon Key)
 const supabase = createClient(
   'https://YOUR_PROJECT_ID.supabase.co',
   'YOUR_ANON_KEY'
@@ -31,7 +32,7 @@ export default function Home() {
       client_name: clientName,
       description,
       date,
-      statut
+      statut,
     });
     if (error) {
       alert("Erreur lors de l'ajout");
@@ -46,24 +47,67 @@ export default function Home() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: 20, maxWidth: 600, margin: 'auto' }}>
       <h1>📋 Mes interventions</h1>
+
       <div style={{ marginBottom: 20 }}>
-        <input value={clientName} onChange={e => setClientName(e.target.value)} placeholder="Nom du client" />
-        <input value={date} onChange={e => setDate(e.target.value)} type="date" />
-        <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="Description" />
-        <select value={statut} onChange={e => setStatut(e.target.value)}>
+        <input
+          value={clientName}
+          onChange={(e) => setClientName(e.target.value)}
+          placeholder="Nom du client"
+          style={{ width: '100%', padding: 8, marginBottom: 10 }}
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          style={{ width: '100%', padding: 8, marginBottom: 10 }}
+        />
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
+          style={{ width: '100%', padding: 8, marginBottom: 10, height: 80 }}
+        />
+        <select
+          value={statut}
+          onChange={(e) => setStatut(e.target.value)}
+          style={{ width: '100%', padding: 8, marginBottom: 10 }}
+        >
           <option>À traiter</option>
           <option>Planifiée</option>
           <option>En cours</option>
           <option>Terminée</option>
           <option>Annulée</option>
         </select>
-        <button onClick={addIntervention}>Ajouter l'intervention</button>
+        <button
+          onClick={addIntervention}
+          style={{
+            padding: 10,
+            backgroundColor: '#0070f3',
+            color: 'white',
+            border: 'none',
+            width: '100%',
+            cursor: 'pointer',
+          }}
+        >
+          Ajouter l'intervention
+        </button>
       </div>
-      <ul>
+
+      <h2>📌 Liste des interventions</h2>
+      {interventions.length === 0 && <p>Aucune intervention</p>}
+      <ul style={{ paddingLeft: 0, listStyle: 'none' }}>
         {interventions.map((i) => (
-          <li key={i.id}>
+          <li
+            key={i.id}
+            style={{
+              border: '1px solid #ccc',
+              padding: 10,
+              marginBottom: 10,
+              borderRadius: 4,
+            }}
+          >
             <div><strong>Client :</strong> {i.client_name}</div>
             <div><strong>Date :</strong> {i.date}</div>
             <div><strong>Statut :</strong> {i.statut}</div>
